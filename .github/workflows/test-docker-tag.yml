@@ -1,0 +1,26 @@
+name: Test Docker Tag
+
+on:
+  workflow_dispatch:
+    inputs:
+      source:
+        description: 'Source image'
+        required: true
+        type: string
+      target:
+        description: 'Target image'
+        required: true
+        type: string
+        
+jobs:
+  tag:
+    runs-on: [ linux-standard ]
+        
+    steps:
+      - id: tag-image
+        uses: custom-actions/docker-tag@main
+        with:
+          username: ${{ secrets.NUID_USERNAME }}
+          password: ${{ secrets.NUID_PASSWORD }}
+          source-image: ${{ inputs.source }}
+          target-image: ${{ inputs.target }}
